@@ -1,7 +1,7 @@
 package net.corda.bootstrapper
 
-import com.jcabi.manifests.Manifests
 import net.corda.core.internal.*
+import net.corda.node.utilities.CordaVersionProvider
 import net.corda.nodeapi.internal.network.NetworkBootstrapper
 import picocli.CommandLine
 import picocli.CommandLine.*
@@ -169,19 +169,5 @@ class Main : Runnable {
             System.setProperty("logLevel", "trace")
         }
         NetworkBootstrapper().bootstrap(dir.toAbsolutePath().normalize(), copyCordapps = !noCopy)
-    }
-}
-
-private class CordaVersionProvider : IVersionProvider {
-    companion object {
-        val releaseVersion: String by lazy { Manifests.read("Corda-Release-Version") }
-        val revision: String by lazy { Manifests.read("Corda-Revision") }
-    }
-
-    override fun getVersion(): Array<String> {
-        return arrayOf(
-                "Version: $releaseVersion",
-                "Revision: $revision"
-        )
     }
 }

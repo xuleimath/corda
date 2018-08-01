@@ -37,6 +37,11 @@ class ConfigFilePathArgsParser : Validated {
  * in the manifest file.
  */
 class CordaVersionProvider : IVersionProvider {
+    companion object {
+        val releaseVersion: String by lazy { Manifests.read("Corda-Release-Version") }
+        val revision: String by lazy { Manifests.read("Corda-Revision") }
+    }
+
     override fun getVersion(): Array<String> {
         return if (Manifests.exists("Corda-Release-Version") && Manifests.exists("Corda-Revision")) {
             arrayOf("Version: ${Manifests.read("Corda-Release-Version")}", "Revision: ${Manifests.read("Corda-Revision")}")
